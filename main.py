@@ -42,12 +42,11 @@ def tweet():
         return jsonify(response)
 
     elif request.method =='PUT':
-        newvalue=request.json.get('updatelike',1)
         tweetid=request.json.get('tweetid',0)
+        likes=request.json.get('likes')
+        likes+=1
 
-        for r in tweets:
-            if tweetid==r['tweetid']:
-                r['likes']=newvalue
+        result=tweets.update({"tweetid":tweetid},{"$set":{"likes":likes}})
 
         response={
             'message':'Tweet updated'
