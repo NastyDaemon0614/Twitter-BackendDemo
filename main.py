@@ -8,7 +8,7 @@ client=MongoClient()
 datab=client.tweetdb
 tweets=datab.tweets
 
-@app.route('/', methods=['GET','POST','PUT'])
+@app.route('/', methods=['GET','POST','PUT','DELETE'])
 def tweet():
 
     if request.method == 'POST':
@@ -53,6 +53,17 @@ def tweet():
         }
 
         return jsonify(response)
+    
+    elif request.method =='DELETE':
+
+        tweetid=request.json.get('tweetid',0)
+        result=tweets.delete_one({"tweetid":tweetid})
+
+        response={
+            "message":"tweet deleted"
+        }
+        return jsonify(response)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
