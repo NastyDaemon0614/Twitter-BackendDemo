@@ -43,10 +43,7 @@ def tweet():
 
     elif request.method =='PUT':
         tweetid=request.json.get('tweetid',0)
-        likes=request.json.get('likes')
-        likes+=1
-
-        result=tweets.update({"tweetid":tweetid},{"$set":{"likes":likes}})
+        result=tweets.update({"tweetid":tweetid},{"$inc":{"likes":1}})
 
         response={
             'message':'Tweet updated'
